@@ -14,6 +14,7 @@ def getHeader(inputfile, headerLine):
          currLine += 1
          if currLine == int(headerLine):
             line = line.decode('utf-8')
+            line = line.replace('\n','')
             header = line.split('\t')
             f_in.close()
             break
@@ -64,7 +65,7 @@ def main():
    columnnames = []
    with open(columnsfile, 'rb') as f_in:
      for line in f_in:
-        columnnames.append(line.decode('utf-8').split('\t')[0]) # will only take first column values and ignore any other columns in the file 
+        columnnames.append(line.decode('utf-8').split('\t')[0].replace('\n','')) # will only take first column values and ignore any other columns in the file 
 
    print('Determining column indices to extract')
    columnIndices = []
@@ -82,6 +83,7 @@ def main():
    newline = '\t'.join(outHeader)
    newline += '\n'
 
+   print(columnIndices)
    print('Extracting the desired columns line by line')
    with gzip.open(inputfile,'rb') as f_in:
      with gzip.open(outputfile, 'wb') as f_out:
@@ -95,6 +97,7 @@ def main():
             newline = '\t'.join(columns_to_keep)
             newline += '\n'
             f_out.write(bytes(newline, 'UTF-8')) 
+     f_out.close()
 
 if __name__ == '__main__':
   main()
