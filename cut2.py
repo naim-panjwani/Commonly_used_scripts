@@ -83,7 +83,6 @@ def main():
    newline = '\t'.join(outHeader)
    newline += '\n'
 
-   print(columnIndices)
    print('Extracting the desired columns line by line')
    with gzip.open(inputfile,'rb') as f_in:
      with gzip.open(outputfile, 'wb') as f_out:
