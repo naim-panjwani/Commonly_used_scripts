@@ -8,6 +8,7 @@ awk '$1 < 1 || $1 > 22' ${dataset}.bim |cut -f2 >snps_to_rm.txt
 #grep ^23 ${dataset}.bim |cut -f2 >snps_to_rm.txt
 awk '$5 == "I" || $6 == "I" || $5 == "D" || $6 == "D"' ${dataset}.bim |cut -f2 >>snps_to_rm.txt
 awk '($5 == "A" && $6 == "T") || ($5 == "T" && $6 == "A") || ($5 == "G" && $6 == "C") || ($5 == "C" && $6 == "G")' ${dataset}.bim |cut -f2 >>snps_to_rm.txt
+awk '($5 != "A" && $5 != "T" && $5 != "G" && $5 != "C") || ($6 != "A" && $6 != "T" && $6 != "G" && $6 != "C")' ${dataset}.bim |cut -f2 >>snps_to_rm.txt
 
 plink1.9 --noweb --bfile ${dataset} --exclude snps_to_rm.txt --make-bed --out ${prefix}_bad_snps_rm
 
