@@ -91,7 +91,7 @@ def main():
          currLine += 1
          line = line.decode('utf-8')
          if(currLine > headerLine):
-            columns = line.split('\t')
+            columns = [line.split('\t')[i].replace('\n','') for i in range(len(line.split('\t')))]
             columns_to_keep = [columns[i] for i in columnIndices]
             newline = '\t'.join(columns_to_keep)
             newline += '\n'
