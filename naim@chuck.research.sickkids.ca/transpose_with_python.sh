@@ -1,1 +1,0 @@
-python -c "import sys; print('\n'.join(' '.join(c) for c in zip(*(l.strip().split() for l in sys.stdin.readlines() if l.strip()))))" < /home/Bowei/tryImputation/chr1/concord/400dataALLSNPsameOrderwithRef.txt > bowei_transpose.txt
