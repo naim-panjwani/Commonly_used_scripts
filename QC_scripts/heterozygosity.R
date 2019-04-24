@@ -67,13 +67,13 @@ dev.off()
 #boxplot(HetSexF$Het) # females should be above zero
 
 # To create interactive plotly plot:
-males = data.frame(autoHet=HetAutoM$Het, sexHet=HetSexM$Het, sex="males", IID=HetAutoM$IID)
-females = data.frame(autoHet=HetAutoF$Het, sexHet=HetSexF$Het, sex="females", IID=HetAutoF$IID)
-unknowns = data.frame(autoHet=HetAutoNoSex$Het, sexHet=HetSexNoSex$Het, sex="unknown", IID=HetAutoNoSex$IID)
-data = rbind(males, females, unknowns)
+#males = data.frame(autoHet=HetAutoM$Het, sexHet=HetSexM$Het, sex="males", IID=HetAutoM$IID)
+#females = data.frame(autoHet=HetAutoF$Het, sexHet=HetSexF$Het, sex="females", IID=HetAutoF$IID)
+#unknowns = data.frame(autoHet=HetAutoNoSex$Het, sexHet=HetSexNoSex$Het, sex="unknown", IID=HetAutoNoSex$IID)
+#data = rbind(males, females, unknowns)
 
-p <- plot_ly(data=data, x = ~autoHet, y = ~sexHet, color = ~sex, text = ~IID, type = 'scatter', mode = 'markers')
-chart_link = api_create(p, filename="BIOJUME-1903-Heterozygosity")
-chart_link
+#p <- plot_ly(data=data, x = ~autoHet, y = ~sexHet, color = ~sex, text = ~IID, type = 'scatter', mode = 'markers')
+#chart_link = api_create(p, filename="BIOJUME-1903-Heterozygosity")
+#chart_link
 
 
