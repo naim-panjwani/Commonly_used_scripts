@@ -40,7 +40,7 @@ HetSexM <- data.frame(Het=1-(XMales$O.HOM./XMales$N.NM.),
 HetSexF <- data.frame(Het=1-(XFemales$O.HOM./XFemales$N.NM.),
                      FID=XFemales$FID, IID=XFemales$IID)
 HetAutoNoSex <- data.frame(Het=1-(autosomeNoSex$O.HOM./autosomeNoSex$N.NM.),
-                          FID=autosomeNoSex$FID, IID=autosomeNoSex)
+                          FID=autosomeNoSex$FID, IID=autosomeNoSex$IID)
 HetSexNoSex <- data.frame(Het=1-(XNoSex$O.HOM./XNoSex$N.NM.),
                           FID=XNoSex$FID, IID=XNoSex)
 
@@ -66,4 +66,11 @@ dev.off()
 
 #boxplot(HetSexF$Het) # females should be above zero
 
+# To create interactive plotly plot:
+#males = data.frame(autoHet=HetAutoM$Het, sexHet=HetSexM$Het, sex="males", IID=HetAutoM$IID)
+#females = data.frame(autoHet=HetAutoF$Het, sexHet=HetSexF$Het, sex="females", IID=HetAutoF$IID)
+#unknowns = data.frame(autoHet=HetAutoNoSex$Het, sexHet=HetSexNoSex$Het, sex="unknown", IID=HetAutoNoSex$IID)
+#data = rbind(males, females, unknowns)
+
+#p <- plot_ly(data=data, x = ~autoHet, y = ~sexHet, color = ~sex, text = ~IID, type = 'scatter', mode = 'markers')
 
