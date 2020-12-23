@@ -1,0 +1,19 @@
+#!/bin/bash -x
+
+#PBS -l mem=60g
+#PBS -l vmem=60g
+#PBS -l walltime=10:00:00
+#PBS -l nodes=1:ppn=32
+#PBS -o /home/naim/permuation_analysis/19GABA_common_snps/joboutdir/ 
+#PBS -e /home/naim/permuation_analysis/19GABA_common_snps/joboutdir/
+#PBS -d /home/naim/permuation_analysis/19GABA_common_snps
+#PBS -N GABA_rare_permute
+
+export PATH=$PATH:$PBS_O_WORKDIR
+hostname
+
+cd $PBS_O_WORKDIR
+echo "Working dir is ${PBS_O_WORKDIR}"
+
+Rscript permutation_analysis_v3.R 07_19GABA_rare_snps 08_19GABA_rare_snps_recodeA 24_mergedset_pcapc.ped 09_19GABA_rare.txt >09_19GABA_permutations.Rout
+

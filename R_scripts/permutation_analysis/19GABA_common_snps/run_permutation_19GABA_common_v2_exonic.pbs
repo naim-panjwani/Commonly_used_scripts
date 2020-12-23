@@ -1,0 +1,19 @@
+#!/bin/bash -x
+
+#PBS -l mem=60g
+#PBS -l vmem=60g
+#PBS -l walltime=5:00:00
+#PBS -l nodes=1:ppn=32
+#PBS -o /home/naim/permuation_analysis/19GABA_common_snps/joboutdir/ 
+#PBS -e /home/naim/permuation_analysis/19GABA_common_snps/joboutdir/
+#PBS -d /home/naim/permuation_analysis/19GABA_common_snps/
+#PBS -N GABA_common_permute3
+
+export PATH=$PATH:$PBS_O_WORKDIR
+hostname
+
+cd $PBS_O_WORKDIR
+echo "Working dir is ${PBS_O_WORKDIR}"
+
+Rscript permutation_analysis_v4_exonic.R 03_19GABA_common_snps 04_19GABA_common_snps_recodeA 24_mergedset_pcapc.ped 19reinthal_gaba_coord_with_exons.txt 12_19GABA_common_exonic.txt >12_19GABA_permutations_exonic.Rout
+

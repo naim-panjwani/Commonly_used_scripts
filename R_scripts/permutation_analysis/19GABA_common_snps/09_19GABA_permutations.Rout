@@ -1,0 +1,40 @@
+[1] 32
+[1] "Loading raw file"
+[1] "Ordering data - important if running GEE"
+[1] "Data re-ordering done"
+[1] "Generating covariates"
+[1] "Base model summary without genotype: CTS|SSD = Sex + PC1 + PC2 + PC3"
+
+Call:
+glm(formula = CTS ~ Sex + pc1 + pc2 + pc3, family = "binomial")
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.1166  -0.5804  -0.5242  -0.4569   2.2780  
+
+Coefficients:
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)  -1.7291     0.1252 -13.809  < 2e-16 ***
+Sex          -0.2284     0.1998  -1.143  0.25286    
+pc1          -2.7803     2.7651  -1.006  0.31466    
+pc2          -8.0666     2.7305  -2.954  0.00313 ** 
+pc3           4.9414     2.7674   1.786  0.07417 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 721.28  on 874  degrees of freedom
+Residual deviance: 707.02  on 870  degrees of freedom
+AIC: 717.02
+
+Number of Fisher Scoring iterations: 4
+
+[1] "Running Simple Logistic association model"
+[1] 14.26554
+[1] "Saving observed statistics"
+[1] "Starting permutations N = 10000"
+[1] "NOTE: TAKING GENOTYPE BIG.MATRIX INTO MEMORY AND PARALLELIZING BY PERMUTATION ITERATIONS"
+[1] "This works best when the number of genotype markers (15) < number of permutations (10000)"
+[1] 0.2878
+[1] "Empirical P-value =  0.2878"

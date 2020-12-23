@@ -1,0 +1,44 @@
+
+@----------------------------------------------------------@
+|        PLINK!       |     v1.07      |   10/Aug/2009     |
+|----------------------------------------------------------|
+|  (C) 2009 Shaun Purcell, GNU General Public License, v2  |
+|----------------------------------------------------------|
+|  For documentation, citation & bug-report instructions:  |
+|        http://pngu.mgh.harvard.edu/purcell/plink/        |
+@----------------------------------------------------------@
+
+Skipping web check... [ --noweb ] 
+Writing this text to log file [ 13_geno_tables.log ]
+Analysis started: Thu Mar 26 13:17:09 2015
+
+Options in effect:
+	--noweb
+	--bfile 07_19GABA_rare_snps
+	--model
+	--out 13_geno_tables
+
+Reading map (extended format) from [ 07_19GABA_rare_snps.bim ] 
+15 markers to be included from [ 07_19GABA_rare_snps.bim ]
+Reading pedigree information from [ 07_19GABA_rare_snps.fam ] 
+875 individuals read from [ 07_19GABA_rare_snps.fam ] 
+875 individuals with nonmissing phenotypes
+Assuming a disease phenotype (1=unaff, 2=aff, 0=miss)
+Missing phenotype value is also -9
+126 cases, 749 controls and 0 missing
+508 males, 367 females, and 0 of unspecified sex
+Reading genotype bitfile from [ 07_19GABA_rare_snps.bed ] 
+Detected that binary PED file is v1.00 SNP-major mode
+Before frequency and genotyping pruning, there are 15 SNPs
+782 founders and 93 non-founders found
+Total genotyping rate in remaining individuals is 0.999086
+0 SNPs failed missingness test ( GENO > 1 )
+0 SNPs failed frequency test ( MAF < 0 )
+After frequency and genotyping pruning, there are 15 SNPs
+After filtering, 126 cases, 749 controls and 0 missing
+After filtering, 508 males, 367 females, and 0 of unspecified sex
+Full-model association tests, minimum genotype count: --cell 5
+Writing full model association results to [ 13_geno_tables.model ] 
+
+Analysis finished: Thu Mar 26 13:17:10 2015
+

@@ -1,0 +1,101 @@
+[1] 32
+[1] "Determining which variants are exonic +/- 5 intronic bases"
+[1] "Exonic variants' list saved in 12_19GABA_common_exonic_exonicSNPs.txt"
+[1] "Total # SNPs: 244"
+[1] "Total # Exonic SNPs: 21"
+[1] "Loading raw file"
+[1] "Ordering data - important if running GEE"
+[1] "Excluding non-exonic variants"
+[1] "Data re-ordering done"
+[1] "Generating covariates"
+[1] "Base model summary without genotype: CTS|SSD = Sex + PC1 + PC2 + PC3"
+
+Call:
+glm(formula = CTS ~ Sex + pc1 + pc2 + pc3, family = "binomial")
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.1166  -0.5804  -0.5242  -0.4569   2.2780  
+
+Coefficients:
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)  -1.7291     0.1252 -13.809  < 2e-16 ***
+Sex          -0.2284     0.1998  -1.143  0.25286    
+pc1          -2.7803     2.7651  -1.006  0.31466    
+pc2          -8.0666     2.7305  -2.954  0.00313 ** 
+pc3           4.9414     2.7674   1.786  0.07417 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 721.28  on 874  degrees of freedom
+Residual deviance: 707.02  on 870  degrees of freedom
+AIC: 717.02
+
+Number of Fisher Scoring iterations: 4
+
+[1] "Running Simple Logistic association model"
+[1] 12.3684
+[1] "Saving observed statistics"
+[1] "Starting permutations N = 10000"
+[1] "NOTE: TAKING GENOTYPE BIG.MATRIX INTO MEMORY AND PARALLELIZING BY PERMUTATION ITERATIONS"
+[1] "This works best when the number of genotype markers (21) < number of permutations (10000)"
+[1] 0.8832
+[1] "Empirical P-value for full gene set =  0.8832"
+[1] "Running per-gene permutation tests"
+[1] "Per-gene permutation test results:"
+    CHR   txStart     txEnd   Gene Num_rare_snps
+2  chr3  97705526  97754148 GABRR3             1
+3  chr3  97705526  97754148 GABRR3             1
+5  chr4  46920916  46996424 GABRA4             2
+6  chr4  47033294  47428447 GABRB1             1
+8  chr4  46920916  46995522 GABRA4             1
+9  chr4  46920916  46995522 GABRA4             1
+11 chr4  46037786  46126082 GABRG1             3
+12 chr5 161274196 161326965 GABRA1             1
+13 chr5 161112657 161129598 GABRA6             2
+14 chr5 160715435 160975130 GABRB2             1
+15 chr5 161494647 161582545 GABRG2             1
+16 chr5 161274684 161326965 GABRA1             1
+17 chr5 161274939 161326965 GABRA1             1
+18 chr5 161275541 161326965 GABRA1             1
+19 chr5 161277702 161326965 GABRA1             1
+20 chr5 170210722 170241050  GABRP             1
+21 chr5 170210722 170241050  GABRP             1
+22 chr5 160715435 160975130 GABRB2             1
+23 chr5 161494647 161582545 GABRG2             1
+24 chr5 161494647 161582545 GABRG2             1
+25 chr6  89887222  89927496 GABRR1             5
+26 chr6  89887222  89927496 GABRR1             5
+27 chr6  89887222  89941007 GABRR1             5
+28 chr6  89887222  89927496 GABRR1             5
+29 chr6  89966839  90025018 GABRR2             1
+31 chrX 151121595 151143151  GABRE             2
+                                                  SNPs      P
+2                                            ,rs832032 0.9203
+3                                            ,rs832032 0.9226
+5                                 ,rs953380,rs13151759 0.5420
+6                                              ,rs6284 0.0945
+8                                            ,rs953380 0.8923
+9                                            ,rs953380 0.8911
+11                      ,rs13115251,rs7683876,rs976156 0.7561
+12                                           ,rs998754 0.5461
+13                               ,rs34907804,rs3219151 0.3491
+14                                           ,rs592403 0.6745
+15                                         ,rs11135176 0.4424
+16                                           ,rs998754 0.5401
+17                                           ,rs998754 0.5454
+18                                           ,rs998754 0.5442
+19                                           ,rs998754 0.5440
+20                                          ,rs1063310 0.3088
+21                                          ,rs1063310 0.3149
+22                                           ,rs592403 0.6759
+23                                         ,rs11135176 0.4469
+24                                         ,rs11135176 0.4481
+25 ,rs3734201,rs1796743,rs4590242,rs1186902,rs12200969 0.6157
+26 ,rs3734201,rs1796743,rs4590242,rs1186902,rs12200969 0.6054
+27 ,rs3734201,rs1796743,rs4590242,rs1186902,rs12200969 0.6268
+28 ,rs3734201,rs1796743,rs4590242,rs1186902,rs12200969 0.6186
+29                                           ,rs282129 0.6304
+31                               ,rs45439991,rs1139916 0.8321
