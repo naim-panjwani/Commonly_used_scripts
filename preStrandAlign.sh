@@ -28,9 +28,12 @@ num_snps=$(wc -l ${prefix}_temporary |cut -d' ' -f1)
 echo "There are " ${num_snps} " non-chr1-23 SNPs"
 rm ${prefix}_temporary
 
+echo 
+echo "Removing identified SNPs with PLINK, and changing underscores to dashes in ID fields"
+echo 
 # Underscores in FID/IID fields will cause grief later on, so change it to a dash:
 paste -d' ' <(cut -d' ' -f1,2 ${plinkfile}.fam) <(cut -d' ' -f1,2 ${plinkfile}.fam |sed 's/_/-/g') >${prefix}_ID_underscore_to_dash.txt
-plink1.9 --bfile ${plinkfile} --exclude ${prefix}_snps_to_rm.txt --update-ids ${prefix}_ID_underscore_to_dash.txt --make-bed --out ${outfilename}
+plink --bfile ${plinkfile} --exclude ${prefix}_snps_to_rm.txt --update-ids ${prefix}_ID_underscore_to_dash.txt --make-bed --out ${outfilename}
 
 echo -e "Done\n"
 echo "NOTE: You may also want to remove unmappable SNPs prior to strand alignment (listed .miss and .multiple Will Rayner files)"

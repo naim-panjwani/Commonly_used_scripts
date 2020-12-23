@@ -1,0 +1,23 @@
+#!/bin/bash -x
+
+#PBS -l mem=4g
+#PBS -l vmem=4g
+#PBS -l walltime=23:59:00
+#PBS -l nodes=1:ppn=1
+#PBS -o /hpf/largeprojects/struglis/cfcentre/strug/job_output/
+#PBS -e /hpf/largeprojects/struglis/cfcentre/strug/job_output/
+#PBS -d /hpf/largeprojects/struglis/cfcentre/strug
+#PBS -N calculate_folder_size
+
+hostname
+date
+
+
+# For example: for i in $(ls -d * |grep -v fanwang); do qsub -v folder_name=$i calculate_folder_sizes.pbs; done
+
+echo "Working dir is ${PBS_O_WORKDIR}"
+cd $PBS_O_WORKDIR
+
+du -sh $folder_name >${folder_name}_size.txt
+
+echo "Done"

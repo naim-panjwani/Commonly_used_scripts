@@ -1,9 +1,4 @@
 #!/usr/local/bin/python3.3
-# Usage: python calculate_MAF_from_imputedVCF.py -i <inputfile> -o <outputfile>
-# PRE: inputfile must be gzipped (or bgzipped) and must be a vcf with hard called genotypes colon and then dosage such as 0|1:0.1:*
-#      That is, GT:DS:*
-#      If multi-allelic (separated by commas on the same row), it will calculate all the allele frequencies and return the highest one (ie. second major allele)
-# POST: A file with the first 9 columns of the VCF plus the MAF from the hard called genotypes and the MAF from dosages
 
 import sys, getopt, gzip
 
@@ -62,11 +57,11 @@ def main():
       opts, args = getopt.getopt(sys.argv[1:],"hi:o:",["ifile=","ofile="])
    except getopt.GetoptError as err:
       print(str(err))
-      print('calculate_MAF_from_imputedVCF.py -i <inputfile> -o <outputfile>')
+      print('cut.py -i <inputfile> -o <outputfile>')
       sys.exit(2)
    for opt, arg in opts:
       if opt == '-h':
-         print('calculate_MAF_from_imputedVCF.py -i <inputfile> -o <outputfile>')
+         print('cut.py -i <inputfile> -o <outputfile>')
          sys.exit()
       elif opt in ("-i", "--ifile"):
          inputfile = arg

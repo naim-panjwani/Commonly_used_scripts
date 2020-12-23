@@ -1,0 +1,29 @@
+#!/bin/bash -x
+
+#PBS -l mem=120g
+#PBS -l vmem=110g
+#PBS -l gres=localhd:20
+#PBS -l walltime=20:00:00
+#PBS -l nodes=1:ppn=1
+#PBS -o /home/naim/UKRE_imputation/150602-SS_ELP4_region/imputation_output/vcf2plink/joboutdir/
+#PBS -e /home/naim/UKRE_imputation/150602-SS_ELP4_region/imputation_output/vcf2plink/joboutdir/
+#PBS -d /home/naim/UKRE_imputation/150602-SS_ELP4_region/imputation_output/vcf2plink/
+#PBS -N vcf2plink_elp4
+
+
+export OUTDIR=$PBS_O_WORKDIR/joboutdir/
+export PATH=$PATH:$PBS_O_WORKDIR
+TEMPDIR="/localhd/$PBS_JOBID"
+hostname
+
+echo "Working dir is ${PBS_O_WORKDIR}"
+
+date
+
+cd $PBS_O_WORKDIR/
+cp 20_SS_chr11_20-50Mb.imputed.vcf.gz $TEMPDIR/original.vcf.gz
+cp vcf2plink.sh $TEMPDIR/
+
+cd $TEMPDIR/
+bash vcf2plink.sh original 20_SS_chr11_20-50Mb.0.8AR2 >$PBS_O_WORKDIR/vcf2plink.out
+cp 20_SS_chr11_20-50Mb.0.8AR2* $PBS_O_WORKDIR/
