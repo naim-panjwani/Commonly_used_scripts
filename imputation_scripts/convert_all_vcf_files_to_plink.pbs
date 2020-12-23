@@ -1,0 +1,25 @@
+#!/bin/bash -x
+
+
+export OUTDIR=$PBS_O_WORKDIR/joboutdir
+export PATH=$PATH:$PBS_O_WORKDIR
+hostname
+
+cd $PBS_O_WORKDIR
+echo "Working dir is ${PBS_O_WORKDIR}"
+
+
+
+      echo "Starting conversion of Chromosome ${chr} ${block}"
+      ln -s ../06_UKRE561CEU.chr${chr}.imputed.vcf.gz
+      if [[ ${chr} == "X" ]]; then
+        bash vcf2plink.sh 06_UKRE561CEU.chrX.imputed.nopedused.minmem $OUTVAR.chr${chr}.imputed.noped.AR2.0.7 >chr${chr}.noped.out
+        echo "Converting to binary PLINK"
+        plink --noweb --file $OUTVAR.chr${chr}.imputed.noped.AR2.0.7 --make-bed --out $OUTVAR2.chr${chr}.imputed.AR2.0.7
+      else
+        bash vcf2plink.sh 06_UKRE561CEU.chr${chr}.imputed $OUTVAR.chr${chr}.imputed.AR2.0.7 >chr${chr}.out
+        echo "Converting to binary PLINK"
+        plink --noweb --file $OUTVAR.chr${chr}.imputed.AR2.0.7 --make-bed --out $OUTVAR2.chr${chr}.imputed.AR2.0.7
+      fi
+        echo "Done converting chromosome ${chr} for job # ${PBS_JOBID}"
+

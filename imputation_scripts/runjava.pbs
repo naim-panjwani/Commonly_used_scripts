@@ -1,0 +1,25 @@
+#!/bin/bash -x
+
+
+export OUTDIR=$PBS_O_WORKDIR/joboutdir/
+export PATH=$PATH:$PBS_O_WORKDIR
+hostname
+
+echo "WORKING DIRECTORY IS ${PBS_O_WORKDIR}"
+
+echo "Extracting matching reference block"
+refdir=$PBS_O_WORKDIR/1000Genomes_phase3_for_BEAGLE_v4/
+cd $refdir
+(zcat chr${chr}.1kg.phase3.v5.vcf.gz |grep ^'#'; tabix chr${chr}.1kg.phase3.v5.vcf.gz ${chr}:${minbp}-${maxbp}) |bgzip >temp_refmatch/chr${chr}.block${block}.vcf.gz
+
+cd $PBS_O_WORKDIR 
+echo "Starting imputation with BEAGLE v4 r1398"
+       java -Xmx110g -jar beagle.r1398.jar \
+            ref=1000Genomes_phase3_for_BEAGLE_v4/temp_refmatch/chr${chr}.block${block}.vcf.gz \
+            gt=13_chr${chr}_UKRE_Spit_for_Sci.${block}.vcf.gz \
+            out=imputation_output/temp_impute/14_UKRE_Spit_for_Sci.chr${chr}.block${block}.imputed \
+            chrom=${chr} \
+            ped=pedfile_for_BEAGLE.ped \
+            nthreads=31 >imputation_output/temp_impute/impute_chr${chr}.block${block}.out
+
+echo "End of script for JOB ${PBS_JOBID} for chromosome ${chr} block ${block}"
