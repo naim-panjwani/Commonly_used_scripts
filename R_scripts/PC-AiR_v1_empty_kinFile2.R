@@ -33,7 +33,7 @@ genoData <- GenotypeData(geno)
 
 iids <- getScanID(genoData)
 print("Reading KING kinship coefficients")
-KINGmat <- kingToMatrix(paste0(kinship_filename,".kin"))
+KINGmat <- kingToMatrix(paste0(kinship_filename,".kin0"), estimator="Kinship")
 # or run KING using snpgdsIBDKING() function
 
 print("Running PC-AiR")
