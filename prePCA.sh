@@ -18,7 +18,7 @@ echo "2. Remove long LD region, rare alleles, and prune it"
 if [ ! -e extended_ld_regions.txt ]; then ln -s ~/scripts/extended_ld_regions.txt; fi
 plink --noweb --bfile ${prefix}-bad_snps_rm --exclude extended_ld_regions.txt --range --make-bed --out ${prefix}-longregionRemoved
 #prune
-plink --noweb --bfile ${prefix}-longregionRemoved --maf 0.05 --make-bed --out ${prefix}-MAFlongregionRemoved
+plink --noweb --bfile ${prefix}-longregionRemoved --maf 0.05 --hwe 0.001 --make-bed --out ${prefix}-MAFlongregionRemoved
 plink --noweb --bfile ${prefix}-MAFlongregionRemoved --indep-pairwise 1500 100 0.2 --out ${prefix}-pruned
 plink --noweb --bfile ${prefix}-MAFlongregionRemoved --extract ${prefix}-pruned.prune.in --make-bed --out ${prefix}-pruned
 
