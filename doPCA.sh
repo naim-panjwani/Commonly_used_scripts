@@ -1,7 +1,7 @@
 #!/bin/bash
 # Perform PCA analysis using PC-AiR given a set of individuals and a PLINK file
 # Will remove unnecessary SNPs and prune and obtain the kinship matrix via KING prior to running PC-AiR
-# Depends on: prePCA.sh, KING 2.2.4, and PC-AiR_v1_empty_kinFile2.R (tested in conda environment)
+# Depends on: prePCA_plink2.sh, KING 2.2.4, and PC-AiR_v1_empty_kinFile2.R (tested in conda environment)
 # Syntax: bash doPCA.sh <sample_list_to_keep> <plink_root_filename> <outfilename>
 # sample_list.txt has FID and IID
 # Example: bash ~/scripts/doPCA.sh data/intermediate_files/45-samplelist.txt data/intermediate_files/02-bis_set_real_unrelset data/intermediate_files/45-pcair_43noneur_unrelset
@@ -15,12 +15,12 @@ tmpnum=$(date '+%Y%m%d%H%M%S')
 mkdir "$tmpnum"
 tmpfile1="${tmpnum}/1"
 echo "Subsetting samples"
-plink --bfile "$plinkfile" --keep "$samplefile" --make-bed --out "$tmpfile1" --memory 4000
+plink2 --bfile "$plinkfile" --keep "$samplefile" --make-bed --out "$tmpfile1" --memory 10000
 
 infile="$tmpfile1"
 tmpfile2="${tmpnum}/2"
 echo "Preparing file for PCA"
-bash ~/scripts/prePCA.sh "$infile" "$tmpfile2"
+bash ~/scripts/prePCA_plink2.sh "$infile" "$tmpfile2"
 
 infile="${tmpfile2}-pruned.bed"
 prefix="${tmpnum}/3-kinship"

@@ -14,32 +14,32 @@ echo "1. Listing Dataset1 SNPs"
 cut -f2 $1.bim >temp_${id}.dataset_snplist.txt
 
 echo "2. Extracting Dataset common SNPs from dataset2"
-plink --noweb --bfile $2 --extract temp_${id}.dataset_snplist.txt  --make-bed --out temp_${id}_dataset2_common_snps
+plink --noweb --bfile $2 --extract temp_${id}.dataset_snplist.txt  --make-bed --out temp_${id}_dataset2_common_snps --memory 4000
 
 echo "3. Listing Dataset2 common SNPs"
 cut -f2 temp_${id}_dataset2_common_snps.bim >temp_${id}.dataset2_common_snps.txt
 
 echo "4. Extracting common SNPs from Dataset1"
-plink --noweb --bfile $1 --extract temp_${id}.dataset2_common_snps.txt --make-bed --out temp_${id}_dataset1_common_snps
+plink --noweb --bfile $1 --extract temp_${id}.dataset2_common_snps.txt --make-bed --out temp_${id}_dataset1_common_snps --memory 4000
 
 echo "5. Attempting 1st merge"
-plink --noweb --bfile temp_${id}_dataset2_common_snps --bmerge temp_${id}_dataset1_common_snps.bed temp_${id}_dataset1_common_snps.bim temp_${id}_dataset1_common_snps.fam --make-bed --out temp_${id}_mergedsets1
+plink --noweb --bfile temp_${id}_dataset2_common_snps --bmerge temp_${id}_dataset1_common_snps.bed temp_${id}_dataset1_common_snps.bim temp_${id}_dataset1_common_snps.fam --make-bed --out temp_${id}_mergedsets1 --memory 4000
 
 if [[ -e "temp_${id}_mergedsets1-merge.missnp" ]]; then
   echo "6. Flip strand at specific identified SNPs"
-  plink --noweb --bfile temp_${id}_dataset1_common_snps --flip temp_${id}_mergedsets1-merge.missnp --make-bed --out temp_${id}_dataset1_flipped_snps
+  plink --noweb --bfile temp_${id}_dataset1_common_snps --flip temp_${id}_mergedsets1-merge.missnp --make-bed --out temp_${id}_dataset1_flipped_snps --memory 4000
 
   echo "7. Attempting 2nd merge"
-  plink --noweb --bfile temp_${id}_dataset1_flipped_snps --bmerge temp_${id}_dataset2_common_snps.bed temp_${id}_dataset2_common_snps.bim temp_${id}_dataset2_common_snps.fam --make-bed --out temp_${id}_mergedsets2
+  plink --noweb --bfile temp_${id}_dataset1_flipped_snps --bmerge temp_${id}_dataset2_common_snps.bed temp_${id}_dataset2_common_snps.bim temp_${id}_dataset2_common_snps.fam --make-bed --out temp_${id}_mergedsets2 --memory 4000
   
   if [[ -e "temp_${id}_mergedsets2-merge.missnp" ]]; then
     mv temp_${id}_mergedsets2-merge.missnp polymorphic_snp_list_${id}.missnp
     echo "Likely have polymorphic SNPs; removing polymorphic SNPs listed in polymorphic_snp_list_${id}.missnp"
-    plink --noweb --bfile temp_${id}_dataset1_flipped_snps --exclude polymorphic_snp_list_${id}.missnp --make-bed --out temp_${id}_dataset1_polymor_rm
-    plink --noweb --bfile temp_${id}_dataset2_common_snps --exclude polymorphic_snp_list_${id}.missnp --make-bed --out temp_${id}_dataset2_polymor_rm
+    plink --noweb --bfile temp_${id}_dataset1_flipped_snps --exclude polymorphic_snp_list_${id}.missnp --make-bed --out temp_${id}_dataset1_polymor_rm --memory 4000
+    plink --noweb --bfile temp_${id}_dataset2_common_snps --exclude polymorphic_snp_list_${id}.missnp --make-bed --out temp_${id}_dataset2_polymor_rm --memory 4000
   
     echo "8. Attempting 3rd merge"
-    plink --noweb --bfile temp_${id}_dataset1_polymor_rm --bmerge temp_${id}_dataset2_polymor_rm.bed temp_${id}_dataset2_polymor_rm.bim temp_${id}_dataset2_polymor_rm.fam --make-bed --out temp_${id}_mergedsets3
+    plink --noweb --bfile temp_${id}_dataset1_polymor_rm --bmerge temp_${id}_dataset2_polymor_rm.bed temp_${id}_dataset2_polymor_rm.bim temp_${id}_dataset2_polymor_rm.fam --make-bed --out temp_${id}_mergedsets3 --memory 4000
 
     if [[ ! -e "temp_${id}_dataset2_polymor_rm.bed" ]]; then
       echo "Something went wrong; check temp_${id}_mergedsets3.log file"
