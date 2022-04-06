@@ -35,7 +35,7 @@ Rscript ~/scripts/R_scripts/PC-AiR_v1_empty_kinFile2.R "$infile" "$kinmat" "$out
 
 echo ""
 echo "Checking what is the highest relationship pair"
-maxkinship=$(sed '1d' ${prefix}.kin0 |awk -v max=0 '{if($8>max){want=$8; max=$8}}END{print want} ')
+[ -f "${prefix}.kin0" ] && maxkinship=$(sed '1d' ${prefix}.kin0 |awk -v max=0 '{if($8>max){want=$8; max=$8}}END{print want} ')
 echo "Highest kinship found: ${maxkinship}"
 awk -v maxkinship=$maxkinship '{ 
   if (maxkinship > 0.354) print "Duplicate/MZ twin found";
