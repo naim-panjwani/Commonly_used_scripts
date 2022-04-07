@@ -11,7 +11,7 @@ plinkfile=$2
 outfile=$3
 
 #tmpnum=21080301
-tmpnum=$(date '+%Y%m%d%H%M%S')
+tmpnum=$(date '+%Y%m%d%H%M%S'$RANDOM)
 mkdir "$tmpnum"
 tmpfile1="${tmpnum}/1"
 echo "Subsetting samples"
@@ -37,7 +37,7 @@ echo ""
 echo "Checking what is the highest relationship pair"
 [ -f "${prefix}.kin0" ] && maxkinship=$(sed '1d' ${prefix}.kin0 |awk -v max=0 '{if($8>max){want=$8; max=$8}}END{print want} ')
 echo "Highest kinship found: ${maxkinship}"
-awk -v maxkinship=$maxkinship '{ 
+[ -f "${prefix}.kin0" ] && awk -v maxkinship=$maxkinship '{ 
   if (maxkinship > 0.354) print "Duplicate/MZ twin found";
   else if (maxkinship >= 0.177 && maxkinship <= 0.354) print "1st-degree found";
   else if (maxkinship >= 0.0884 && maxkinship <= 0.177) print "2nd-degree found";
