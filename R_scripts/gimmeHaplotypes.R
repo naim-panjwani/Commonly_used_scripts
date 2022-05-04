@@ -17,7 +17,7 @@ snps_to_assess_filename <- as.character(args[2])
 out_prefix <- as.character(args[3])
 
 library(data.table)
-vcf <- fread(paste("gunzip -c ", vcf_filename), stringsAsFactors = F)
+vcf <- fread(cmd=paste("gunzip -c ", vcf_filename), stringsAsFactors = F)
 snps_to_assess <- fread(snps_to_assess_filename, stringsAsFactors=F, header=F)$V1
 vcf <- subset(vcf, vcf$ID %in% snps_to_assess)
 
