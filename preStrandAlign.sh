@@ -1,6 +1,6 @@
 #!/bin/bash
 # PRE: Takes PLINK binary fileset
-# POST: Removes monomorphic SNPs, indels, and 
+# POST: Removes monomorphic SNPs, indels, ambiguous A/T,G/C SNPs and 
 #       SNPs not in chromosomes 1-23 (keeps chr25 pseudoautosomal region of X also)
 #       Also converts underscores in FID/IID to dashes
 # Example: bash preStrandAligh.sh 41-JME_dup_snps_rm 44-JME_unwanted_snps_rm 44
@@ -11,6 +11,8 @@ outfilename=$2
 prefix=$3
 
 # Remove monomorphic SNPs first:
+n=$(wc -l ${plinkfile}.fam |cut -d' ' -f1)
+maf=$(echo "scale=9; 1 / (2*$n)" |bc)
 echo "Gathering monomorphic SNPs"
 awk '$5==0' ${plinkfile}.bim >${prefix}_snps_to_rm.txt
 num_snps=$(wc -l ${prefix}_snps_to_rm.txt |cut -d' ' -f1)
@@ -27,13 +29,25 @@ cat ${prefix}_temporary >>${prefix}_snps_to_rm.txt
 num_snps=$(wc -l ${prefix}_temporary |cut -d' ' -f1)
 echo "There are " ${num_snps} " non-chr1-23 SNPs"
 rm ${prefix}_temporary
+echo "Gathering ambiguous A/T, G/C SNPs"
+awk '($5 == "A" && $6 == "T") || ($5 == "T" && $6 == "A") || ($5 == "G" && $6 == "C") || ($5 == "C" && $6 == "G")' ${dataset}.bim |cut -f2 >${prefix}_temporary
+cat ${prefix}_temporary >>${prefix}_snps_to_rm.txt
+num_snps=$(wc -l ${prefix}_temporary |cut -d' ' -f1)
+echo "There are ${num_snps} ambiguous A/T,G/C SNPs"
+rm ${prefix}_temporary
+
 
 echo 
 echo "Removing identified SNPs with PLINK, and changing underscores to dashes in ID fields"
 echo 
 # Underscores in FID/IID fields will cause grief later on, so change it to a dash:
 paste -d' ' <(cut -d' ' -f1,2 ${plinkfile}.fam) <(cut -d' ' -f1,2 ${plinkfile}.fam |sed 's/_/-/g') >${prefix}_ID_underscore_to_dash.txt
-plink --bfile ${plinkfile} --exclude ${prefix}_snps_to_rm.txt --update-ids ${prefix}_ID_underscore_to_dash.txt --make-bed --out ${outfilename}
+
+if (( $(echo "$maf!=0" |bc -l) )); then 
+  plink --bfile ${plinkfile} --exclude ${prefix}_snps_to_rm.txt --update-ids ${prefix}_ID_underscore_to_dash.txt --make-bed --out ${outfilename} --maf $maf
+else
+  plink --bfile ${plinkfile} --exclude ${prefix}_snps_to_rm.txt --update-ids ${prefix}_ID_underscore_to_dash.txt --make-bed --out ${outfilename}
+fi
 
 echo -e "Done\n"
 echo "NOTE: You may also want to remove unmappable SNPs prior to strand alignment (listed .miss and .multiple Will Rayner files)"
